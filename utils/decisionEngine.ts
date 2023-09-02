@@ -7,7 +7,7 @@ interface DecisionRequest {
 const fetchDecision = async (decisionRequest: DecisionRequest) => {
   try {
     const result = await axios.post(
-      `${process.env.NEXT_PUBLIC_PLATFORM_INTEGRATION_URL}/loan-approval-decision`,
+      `${process.env.PLATFORM_INTEGRATION_URL}/loan-approval-decision`,
       decisionRequest
     );
     return result.data;

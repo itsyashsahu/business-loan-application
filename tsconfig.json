@@ -17,6 +17,12 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "lib/mongodb.js",
+    "pages/api/auth/...nextauth]iiii.ts"
+  ],
   "exclude": ["node_modules"]
 }
