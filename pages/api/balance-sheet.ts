@@ -1,7 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import SheetItem from "@/interfaces/SheetItem";
 import { fetchBalanceSheet } from "@/utils/accountingSoftware";
-import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type Data = {
