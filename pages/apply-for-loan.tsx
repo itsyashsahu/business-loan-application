@@ -36,7 +36,13 @@ const ApplyForLoan = (props: Props) => {
               </h1>
               <div className="relative mb-4">
                 <label htmlFor="full-name" className="leading-7 text-sm text-gray-400">Loan Amount</label>
-                <input type="number" id="full-name" value={loanAmount} name="loanAmount" onChange={(e) => { setLoanAmount(e.target.value) }} className="w-full bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-indigo-900 rounded border border-gray-600 focus:border-indigo-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                <input type="number" id="full-name" value={loanAmount} name="loanAmount" onChange={(e) => {
+                  const newLoanAmount = parseFloat(e.target.value);
+                  if (!isNaN(newLoanAmount)) {
+                    setLoanAmount(newLoanAmount);
+                  }
+                }}
+                  className="w-full bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-indigo-900 rounded border border-gray-600 focus:border-indigo-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
               </div>
               <button onClick={() => { console.log("Hello "); requestForLoan(loanAmount) }} className="flex items-center mt-auto text-white bg-indigo-500 border-0 py-4 px-4 w-full focus:outline-none hover:bg-indigo-600 rounded">Submit Loan Request
                 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-4 h-4 ml-auto" viewBox="0 0 24 24">
