@@ -1,11 +1,14 @@
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import { useSession, signIn, signOut } from "next-auth/react"
+import { useRouter } from 'next/router'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   const { data: session } = useSession()
+  const router = useRouter()
+
   console.log("🚀 ~ Home ~ session:", session)
   return (
     <main
@@ -56,7 +59,7 @@ export default function Home() {
               </div>
             </div>
             <div className="flex w-full">
-              <button type="submit" className="py-2 px-4  bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+              <button onClick={() => { router.push("/dashboard") }} type="submit" className="py-2 px-4  bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
                 Login
               </button>
             </div>
