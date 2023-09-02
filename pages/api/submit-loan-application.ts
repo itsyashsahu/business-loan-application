@@ -35,6 +35,9 @@ export default async function handler(
     // };
     try {
       const sheet = await fetchBalanceSheet(userId);
+      if (sheet.error) {
+        return res.status(501).json({ error: sheet.error });
+      }
       const preAssessment = calculatePreAssessment(sheet, loanAmount);
       const decision = await fetchDecision({
         businessDetails,

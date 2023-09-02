@@ -21,6 +21,9 @@ export default async function handler(
         userId: "defaultUserId";
       };
       const result = await fetchBalanceSheet(userId);
+      if (result.error) {
+        return res.status(501).json({ error: result.error });
+      }
       res.status(200).json({ balanceSheet: result });
     } catch (error) {
       console.log(error);
