@@ -7,7 +7,7 @@ import Spinner from "@/components/Spinner";
 type Props = {};
 
 const ApplyForLoan = (props: Props) => {
-  const [loanAmount, setLoanAmount] = useState()
+  const [loanAmount, setLoanAmount] = useState<number>()
   const [loanStatus, setLoanStatus] = useState(false);
   const [appliedStatus, setAppliedStatus] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
@@ -53,7 +53,7 @@ const ApplyForLoan = (props: Props) => {
                     }}
                       className="w-full bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-indigo-900 rounded border border-gray-600 focus:border-indigo-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                   </div>
-                  <button onClick={() => { console.log("Hello "); requestForLoan(loanAmount) }} className="flex items-center mt-auto text-white bg-indigo-500 border-0 py-4 px-4 w-full focus:outline-none hover:bg-indigo-600 rounded">Submit Loan Request
+                  <button onClick={() => { console.log("Hello "); requestForLoan(loanAmount || 0) }} className="flex items-center mt-auto text-white bg-indigo-500 border-0 py-4 px-4 w-full focus:outline-none hover:bg-indigo-600 rounded">Submit Loan Request
                     <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-4 h-4 ml-auto" viewBox="0 0 24 24">
                       <path d="M5 12h14M12 5l7 7-7 7"></path>
                     </svg>
