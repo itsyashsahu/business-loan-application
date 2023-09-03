@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
-import React, { useState } from "react";
+import { useRouter } from 'next/router'
+import React, { useEffect, useState } from "react";
 import axios from 'axios'
 import Link from "next/link";
 import Spinner from "@/components/Spinner";
@@ -11,7 +12,13 @@ const ApplyForLoan = (props: Props) => {
   const [loanStatus, setLoanStatus] = useState(false);
   const [appliedStatus, setAppliedStatus] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter()
 
+  useEffect(() => {
+    if (localStorage.getItem("email")) {
+      router.push("/dashboard")
+    }
+  }, [])
 
   const requestForLoan = async (loanAmount: number) => {
     setIsLoading(true)

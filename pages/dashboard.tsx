@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Navbar from '@/components/Navbar'
 type Props = {}
 
 const Dashboard = (props: Props) => {
   const router = useRouter()
-
+  useEffect(() => {
+    if (localStorage.getItem("email")) {
+      router.push("/dashboard")
+    }
+  }, [])
   return (
     <>
       <Navbar />
