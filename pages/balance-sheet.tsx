@@ -8,17 +8,20 @@ const BalanceSheet = (props: Props) => {
   const router = useRouter()
   const [Data, setData] = useState([])
   const [isLoading, setIsLoading] = useState(false)
-  const loadingSkeletonArray = ["   ", "  ", "    ", "    "];
+  const loadingSkeletonArray = ["", "", "", "", ""];
+  const [isError, setIsError] = useState(false)
+
   const fetchData = async () => {
     setIsLoading(true)
     try {
-      const url = `${process.env.NEXT_PUBLIC_API_URL}/api/balance-sheet?userId=123`
+      const url = `${process.env.NEXT_PUBLIC_API_URL}/api/balance-sheet?userId=123&provider=xero`
       const result = await axios.get(url);
       console.log("🚀 ~ useEffect ~ result:", result)
       setData(result.data.balanceSheet);
 
     } catch (e) {
       console.log("🚀 ~ useEffect ~ e:", e)
+      setIsError(true)
     }
     setIsLoading(false)
   }
@@ -88,7 +91,13 @@ const BalanceSheet = (props: Props) => {
                   })
                 }
                 {
-                  Data?.map((item: any, index: number) => {
+                  (!isLoading && isError) &&
+                  <>
+                    Error Occurred Please Try Again
+                  </>
+                }
+                {
+                  !isError && Data?.map((item: any, index: number) => {
                     return (
                       <tr key={index} >
                         <td className="px-4 py-3  whitespace-nowrap">{item.year}</td>

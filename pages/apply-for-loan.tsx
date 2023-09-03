@@ -8,10 +8,13 @@ import Spinner from "@/components/Spinner";
 type Props = {};
 
 const ApplyForLoan = (props: Props) => {
+  // We can use the react query for caching and to increase the code readability
   const [loanAmount, setLoanAmount] = useState<number>()
-  const [loanStatus, setLoanStatus] = useState(false);
-  const [appliedStatus, setAppliedStatus] = useState(false);
-  const [isLoading, setIsLoading] = useState(false)
+  const [loanStatus, setLoanStatus] = useState<boolean>(false);
+  const [appliedStatus, setAppliedStatus] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isError, setIsError] = useState<boolean>(false)
+  const [preAssessment, setPreAssessment] = useState<number>()
   const router = useRouter()
 
   useEffect(() => {
@@ -29,18 +32,26 @@ const ApplyForLoan = (props: Props) => {
         loanAmount
       }
       const result = await axios.post(url, body);
-      console.log("🚀 ~ requestForLoan ~ result:", result.data.approvalStatus.loanStatus)
       setLoanStatus(result.data.approvalStatus.loanStatus)
+      console.log("🚀 ~ requestForLoan ~ result.data:", result.data)
+      setPreAssessment(result.data.preAssessment)
     } catch (e) {
       console.log("🚀 ~ requestForLoan ~ e:", e)
+      setIsError(true)
     }
     setIsLoading(false)
+  }
+  const handleApplicationSubmit = () => {
+    if (loanAmount) {
+      requestForLoan(loanAmount)
+    } else {
+      alert("Please Enter a valid amount")
+    }
   }
   return (
     <>
       <Navbar />
       <section className="text-gray-400 bg-gray-900 body-font h-[91vh]">
-
         <div className="container px-5 py-24 mx-auto">
           <div className="p-4 md:w-1/2 w-full mx-auto h-96 md:h-[30rem]">
             <div className="h-full p-6 rounded-lg border-2 border-gray-700 flex flex-col relative overflow-hidden">
@@ -52,7 +63,7 @@ const ApplyForLoan = (props: Props) => {
                   </h1>
                   <div className="relative mb-4">
                     <label htmlFor="full-name" className="leading-7 text-sm text-gray-400">Loan Amount</label>
-                    <input type="number" id="full-name" value={loanAmount} name="loanAmount" onChange={(e) => {
+                    <input type="number" required value={loanAmount} name="loanAmount" onChange={(e) => {
                       const newLoanAmount = parseFloat(e.target.value);
                       if (!isNaN(newLoanAmount)) {
                         setLoanAmount(newLoanAmount);
@@ -60,7 +71,7 @@ const ApplyForLoan = (props: Props) => {
                     }}
                       className="w-full bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-indigo-900 rounded border border-gray-600 focus:border-indigo-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                   </div>
-                  <button onClick={() => { console.log("Hello "); requestForLoan(loanAmount || 0) }} className="flex items-center mt-auto text-white bg-indigo-500 border-0 py-4 px-4 w-full focus:outline-none hover:bg-indigo-600 rounded">Submit Loan Request
+                  <button onClick={handleApplicationSubmit} className="flex items-center mt-auto text-white bg-indigo-500 border-0 py-4 px-4 w-full focus:outline-none hover:bg-indigo-600 rounded">Submit Loan Request
                     <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-4 h-4 ml-auto" viewBox="0 0 24 24">
                       <path d="M5 12h14M12 5l7 7-7 7"></path>
                     </svg>
@@ -72,7 +83,7 @@ const ApplyForLoan = (props: Props) => {
                 <Spinner />
               }
               {
-                (appliedStatus && !isLoading) &&
+                (appliedStatus && !isLoading && !isError) &&
                 <div className="w-64 p-4 m-auto shadow-lg rounded-2xl">
                   <div className="w-full h-full text-center">
                     <div className="flex flex-col justify-between h-full">
@@ -84,8 +95,12 @@ const ApplyForLoan = (props: Props) => {
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7">
                               </path>
                             </svg>
+
                             <p className="px-6 py-2 text-gray-600 dark:text-gray-100 text-md">
                               Congratulations your loan has been approved.
+                            </p>
+                            <p className="dark:text-white text-bolder" >
+                              Pre-assessment : {preAssessment}
                             </p>
                           </>
                           :
@@ -96,6 +111,9 @@ const ApplyForLoan = (props: Props) => {
 
                             <p className="px-6 py-2 text-gray-600 dark:text-gray-100 text-md">
                               Sorry your loan has been rejected.
+                            </p>
+                            <p className="dark:text-white text-bolder" >
+                              Pre-assessment : {preAssessment}
                             </p>
                           </>
 
@@ -108,6 +126,12 @@ const ApplyForLoan = (props: Props) => {
                     </div>
                   </div>
                 </div>
+              }
+              {
+                (appliedStatus && !isLoading && isError) &&
+                <>
+                  Error Occurred Please Try Again
+                </>
               }
             </div>
           </div>
