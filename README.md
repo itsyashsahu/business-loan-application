@@ -77,7 +77,9 @@ On Success
 
 loanStatus will be random Implemented on the Platform Integration
 
-\*\*An API call is made again to fetch the balance-sheet.
+\*\*An API call is made again to fetch the balance-sheet. assuming the preferred accounting provider of the user from database and userId form the token
+
+AUTH is not enabled on the backend Currently ( Fronted is using the Localstorage Auth )
 
 preAssessment will be 20 ,60 or 100 based on given conditions ( Calculated on the Backend Layer @utils/calculatePreAssessment )
 
