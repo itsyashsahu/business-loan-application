@@ -8,6 +8,7 @@ import calculatePreAssessment from "@/utils/calculatePreAssessment";
 type Data = {
   approvalStatus?: boolean;
   error?: string;
+  preAssessment?: number;
 };
 
 interface LoanRequest {
@@ -46,7 +47,7 @@ export default async function handler(
         preAssessment,
       });
 
-      res.status(200).json({ approvalStatus: decision });
+      res.status(200).json({ approvalStatus: decision, preAssessment });
     } catch (error) {
       console.log(error);
       res.status(501).json({
