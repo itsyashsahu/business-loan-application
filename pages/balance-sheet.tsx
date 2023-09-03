@@ -31,7 +31,7 @@ const BalanceSheet = (props: Props) => {
     } else {
       fetchData();
     }
-  }, [])
+  }, [router])
 
   return (
     <>

@@ -9,7 +9,7 @@ const Dashboard = (props: Props) => {
     if (!localStorage.getItem("email")) {
       router.push("/")
     }
-  }, [])
+  }, [router])
   return (
     <>
       <Navbar />

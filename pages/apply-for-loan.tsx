@@ -21,7 +21,7 @@ const ApplyForLoan = (props: Props) => {
     if (!localStorage.getItem("email")) {
       router.push("/")
     }
-  }, [])
+  }, [router])
 
   const requestForLoan = async (loanAmount: number) => {
     setIsLoading(true)
@@ -42,7 +42,7 @@ const ApplyForLoan = (props: Props) => {
     setIsLoading(false)
   }
   const handleApplicationSubmit = () => {
-    if (loanAmount) {
+    if (loanAmount && loanAmount > 0) {
       requestForLoan(loanAmount)
     } else {
       alert("Please Enter a valid amount")

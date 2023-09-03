@@ -19,7 +19,7 @@ export default function Home() {
     if (localStorage.getItem("email")) {
       router.push("/dashboard")
     }
-  }, [])
+  }, [router])
 
   return (
     <main
