@@ -76,7 +76,9 @@ On Success
 ```
 
 loanStatus will be random Implemented on the Platform Integration
+
 \*\*An API call is made again to fetch the balance-sheet.
+
 preAssessment will be 20 ,60 or 100 based on given conditions ( Calculated on the Backend Layer @utils/calculatePreAssessment )
 
 Assuming business details will be fetched by the backend form the database or the Accounting Software
