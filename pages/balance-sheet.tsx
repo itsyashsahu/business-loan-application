@@ -87,10 +87,10 @@ const BalanceSheet = (props: Props) => {
                   Data?.map((item: any, index: number) => {
                     return (
                       <tr key={index} >
-                        <td className="px-4 py-3">{item.year}</td>
-                        <td className="px-4 py-3">{item.month}</td>
-                        <td className="px-4 py-3">&#8377; {item.assetsValue}</td>
-                        <td className="px-4 py-3 text-lg text-white"> &#8377; {item.profitOrLoss}</td>
+                        <td className="px-4 py-3  whitespace-nowrap">{item.year}</td>
+                        <td className="px-4 py-3  whitespace-nowrap">{item.month}</td>
+                        <td className="px-4 py-3  whitespace-nowrap">&#8377; {item.assetsValue}</td>
+                        <td className="px-4 py-3 text-lg text-white whitespace-nowrap"> &#8377; {item.profitOrLoss}</td>
                       </tr>
                     )
                   })
