@@ -6,8 +6,8 @@ type Props = {}
 const Dashboard = (props: Props) => {
   const router = useRouter()
   useEffect(() => {
-    if (localStorage.getItem("email")) {
-      router.push("/dashboard")
+    if (!localStorage.getItem("email")) {
+      router.push("/")
     }
   }, [])
   return (

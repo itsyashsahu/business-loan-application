@@ -23,8 +23,8 @@ const BalanceSheet = (props: Props) => {
     setIsLoading(false)
   }
   useEffect(() => {
-    if (localStorage.getItem("email")) {
-      router.push("/dashboard")
+    if (!localStorage.getItem("email")) {
+      router.push("/")
     } else {
       fetchData();
     }
