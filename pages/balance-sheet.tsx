@@ -90,7 +90,18 @@ const BalanceSheet = (props: Props) => {
                         <td className="px-4 py-3  whitespace-nowrap">{item.year}</td>
                         <td className="px-4 py-3  whitespace-nowrap">{item.month}</td>
                         <td className="px-4 py-3  whitespace-nowrap">&#8377; {item.assetsValue}</td>
-                        <td className="px-4 py-3 text-lg text-white whitespace-nowrap"> &#8377; {item.profitOrLoss}</td>
+                        <td className="px-4 py-3 text-lg text-white whitespace-nowrap">
+                          {
+                            (item.profitOrLoss > 0) ?
+                              <>
+                                &#8377; {item.profitOrLoss}
+                              </>
+                              :
+                              <>
+                                - &#8377; {-1 * item.profitOrLoss}
+                              </>
+                          }
+                        </td>
                       </tr>
                     )
                   })
