@@ -12,7 +12,6 @@ type Data = {
 
 interface LoanRequest {
   loanAmount: number;
-  businessDetails: BusinessDetails;
   userId: string;
 }
 
@@ -22,27 +21,31 @@ export default async function handler(
 ) {
   if (req.method === "POST") {
     console.log("request.body", req.body);
-    const { loanAmount, businessDetails }: LoanRequest = req.body;
+    const { loanAmount }: LoanRequest = req.body;
 
     // Get this value form the token
     const userId = "defaultUserId";
+    // get the preferred accounting provider of the user from database
+    const provider = "MYOB";
 
-    // const loanAmount = 10000; // Replace with the actual loan amount
-    // const businessDetails = {
-    //   name: "test",
-    //   yearEstablished: 2010,
-    //   profitOrLoss: 1000,
-    // };
+    // These Business details will be fetched from the Database / Accounting provider
+    const businessDetails = {
+      name: "test",
+      yearEstablished: 2010,
+      profitOrLoss: 1000,
+    };
     try {
-      const sheet = await fetchBalanceSheet(userId);
+      const sheet = await fetchBalanceSheet(userId, provider);
       if (sheet.error) {
         return res.status(501).json({ error: sheet.error });
       }
       const preAssessment = calculatePreAssessment(sheet, loanAmount);
+
       const decision = await fetchDecision({
         businessDetails,
         preAssessment,
       });
+
       res.status(200).json({ approvalStatus: decision });
     } catch (error) {
       console.log(error);

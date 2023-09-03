@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const fetchBalanceSheet = async (userId: string) => {
+const fetchBalanceSheet = async (userId: string, provider: "MYOB" | "xero") => {
   try {
-    const url = `${process.env.PLATFORM_INTEGRATION_URL}/api/balance-sheet?userId=${userId}`;
+    const url = `${process.env.PLATFORM_INTEGRATION_URL}/api/balance-sheet?userId=${userId}&provider=${provider}`;
     console.log("🚀 ~ fetchBalanceSheet ~ url:", url);
     const result = await axios.get(url);
     return result.data.sheet;

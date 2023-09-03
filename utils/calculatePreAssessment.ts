@@ -4,8 +4,16 @@ export default function calculatePreAssessment(
   sheet: SheetItem[],
   loanAmount: number
 ): number {
-  // Get the data for the last 12 months
-  const last12MonthsData = sheet.slice(0, 12);
+  
+  const currentDate = new Date();
+
+  const twelveMonthsAgo = new Date();
+  twelveMonthsAgo.setMonth(currentDate.getMonth() - 11);
+
+  const last12MonthsData = sheet.filter((item) => {
+    const itemDate = new Date(item.year, item.month - 1);
+    return itemDate >= twelveMonthsAgo && itemDate <= currentDate;
+  });
 
   const totalAssetValue = last12MonthsData.reduce(
     (acc, item) => acc + item.assetsValue,
@@ -13,12 +21,15 @@ export default function calculatePreAssessment(
   );
   const averageAssetValue = totalAssetValue / last12MonthsData.length;
 
-  const hasMadeProfit = last12MonthsData.some((item) => item.profitOrLoss > 0);
+  let totalPnL = last12MonthsData.reduce(
+    (acc, item) => acc + item.profitOrLoss,
+    0
+  );
 
-  if (hasMadeProfit) {
-    return 60;
-  } else if (averageAssetValue > loanAmount) {
+  if (averageAssetValue > loanAmount) {
     return 100;
+  } else if (totalPnL > 0) {
+    return 60;
   } else {
     return 20;
   }
