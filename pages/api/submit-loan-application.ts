@@ -23,7 +23,9 @@ export default async function handler(
   if (req.method === "POST") {
     console.log("request.body", req.body);
     const { loanAmount }: LoanRequest = req.body;
-
+    if (!(loanAmount && loanAmount > 0)) {
+      return res.status(501).json({ error: "Invalid Request" });
+    }
     // Get this value form the token
     const userId = "defaultUserId";
     // get the preferred accounting provider of the user from database
