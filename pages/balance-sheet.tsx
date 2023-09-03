@@ -50,7 +50,7 @@ const BalanceSheet = (props: Props) => {
               <tbody>
                 {
                   isLoading &&
-                  loadingSkeletonArray.map((str, index) => {
+                  loadingSkeletonArray?.map((str, index) => {
                     return (
                       <tr key={index} className='my-2' >
                         <td className="px-4 py-4">
