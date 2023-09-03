@@ -1,7 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type LoanApprovalResponse = {
-  loanStatus: boolean;
+  loanStatus?: boolean;
+  error?: string;
 };
 
 export default function handler(
@@ -9,9 +10,21 @@ export default function handler(
   res: NextApiResponse<LoanApprovalResponse>
 ) {
   if (req.method === "POST") {
-    const detailsForDecisionEngine = req.body;
+    const { businessDetails, preAssessment } = req.body as {
+      preAssessment: number;
+      businessDetails: {
+        name: string;
+        yearEstablished: number;
+        profitOrLoss: number;
+      };
+    };
+    if (!(businessDetails && preAssessment)) {
+      return res.status(501).json({ error: "Invalid request" });
+    }
+
     // Dummy Logic to decide the loan approval
     // TODO: The Decision Engine will be integrated here
+    // simulation of the Decision Engine
     const randomValue: boolean = Math.random() <= 0.5;
 
     res.status(200).json({ loanStatus: randomValue });

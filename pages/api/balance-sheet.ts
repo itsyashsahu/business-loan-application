@@ -3,7 +3,8 @@ import dummyData from "../../dummyData/data.json";
 import { SheetItem } from "@/interfaces/SheetItem";
 
 interface GetBalanceSheetResponse {
-  sheet: SheetItem[];
+  sheet?: SheetItem[];
+  error?: string;
 }
 
 export default function handler(
@@ -11,8 +12,13 @@ export default function handler(
   res: NextApiResponse<GetBalanceSheetResponse>
 ) {
   if (req.method === "GET") {
-    const { userId } = req.query;
-    console.log("Balance Sheet Fetched for the User - ", userId);
+    const { userId, provider } = req.query as {
+      userId: string;
+      provider: string;
+    };
+    if (!(userId && (provider === "MYOB" || provider === "xero"))) {
+      return res.status(400).json({ error: "Invalid request" });
+    }
     // Currently Dummy Data is Passed as Response
     // TODO: The Accounting software will be integrated here
     res.status(200).json(dummyData);
